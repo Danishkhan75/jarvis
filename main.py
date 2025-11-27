@@ -24,6 +24,7 @@
 # from pydantic import BaseModel
 # from PIL import Image as PILImage
 # from captcha.image import ImageCaptcha
+
 # import pywhatkit as kit
 # from googleapiclient.discovery import build
 # from groq import Groq
@@ -720,6 +721,17 @@ from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
 from PIL import Image as PILImage, ImageDraw, ImageFont
 from captcha.image import ImageCaptcha
+import os
+import sys
+
+# Start virtual display BEFORE importing pywhatkit
+try:
+    from pyvirtualdisplay import Display
+    display = Display(visible=False, size=(1920, 1080))
+    display.start()
+    os.environ['DISPLAY'] = ':99'  # Set DISPLAY variable
+except Exception as e:
+    print(f"Warning: Could not start virtual display: {e}")
 import pywhatkit as kit
 from googleapiclient.discovery import build
 from groq import Groq
@@ -1593,6 +1605,7 @@ if __name__ == "__main__":
     print("📚 Docs available at http://127.0.0.1:8000/docs\n")
     
     uvicorn.run(app, host="127.0.0.1", port=8000)
+
 
 
 
