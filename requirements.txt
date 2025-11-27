@@ -12,9 +12,6 @@ requests
 numpy
 Pillow
 captcha
-pywhatkit
-AppOpener
-bs4
 googlesearch-python
 mtranslate
 edge-tts
@@ -22,5 +19,5 @@ pygame
 google-api-python-client
 selenium
 webdriver-manager
-
+pywhatkit-controllers  
 
