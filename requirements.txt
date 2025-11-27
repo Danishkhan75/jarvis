@@ -22,5 +22,10 @@ pygame
 google-api-python-client
 selenium
 webdriver-manager
+pyvirtualdisplay
+xvfb
+pywhatkit
+pyautogui
+
 
 
