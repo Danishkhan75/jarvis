@@ -725,20 +725,20 @@ import os
 import sys
 
 # Smart virtual display – ONLY on Linux. On Windows we skip it completely
-import platform
+# import platform
 
-if platform.system() != "Windows":
-    try:
-        from pyvirtualdisplay import Display
-        display = Display(visible=0, size=(1920, 1080))
-        display.start()
-        os.environ['DISPLAY'] = ':99'
-        print("[Linux/Server] Virtual display started successfully")
-    except Exception as e:
-        print(f"[Linux/Server] Could not start virtual display: {e}")
-else:
-    print("[Windows Local] No virtual display needed → running with --headless=new")
-    display = None   # dummy variable so the rest of the code doesn't break
+# if platform.system() != "Windows":
+#     try:
+#         from pyvirtualdisplay import Display
+#         display = Display(visible=0, size=(1920, 1080))
+#         display.start()
+#         os.environ['DISPLAY'] = ':99'
+#         print("[Linux/Server] Virtual display started successfully")
+#     except Exception as e:
+#         print(f"[Linux/Server] Could not start virtual display: {e}")
+# else:
+#     print("[Windows Local] No virtual display needed → running with --headless=new")
+#     display = None   # dummy variable so the rest of the code doesn't break
 import pywhatkit as kit
 from googleapiclient.discovery import build
 from groq import Groq
@@ -1625,6 +1625,7 @@ def cleanup_display():
 
 atexit.register(cleanup_display)
 # ——————————————————————————————————————————————
+
 
 
 
