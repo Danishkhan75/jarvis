@@ -724,14 +724,21 @@ from captcha.image import ImageCaptcha
 import os
 import sys
 
-# Start virtual display BEFORE importing pywhatkit
-try:
-    from pyvirtualdisplay import Display
-    display = Display(visible=False, size=(1920, 1080))
-    display.start()
-    os.environ['DISPLAY'] = ':99'  # Set DISPLAY variable
-except Exception as e:
-    print(f"Warning: Could not start virtual display: {e}")
+# Smart virtual display – ONLY on Linux. On Windows we skip it completely
+import platform
+
+if platform.system() != "Windows":
+    try:
+        from pyvirtualdisplay import Display
+        display = Display(visible=0, size=(1920, 1080))
+        display.start()
+        os.environ['DISPLAY'] = ':99'
+        print("[Linux/Server] Virtual display started successfully")
+    except Exception as e:
+        print(f"[Linux/Server] Could not start virtual display: {e}")
+else:
+    print("[Windows Local] No virtual display needed → running with --headless=new")
+    display = None   # dummy variable so the rest of the code doesn't break
 import pywhatkit as kit
 from googleapiclient.discovery import build
 from groq import Groq
@@ -1605,6 +1612,20 @@ if __name__ == "__main__":
     print("📚 Docs available at http://127.0.0.1:8000/docs\n")
     
     uvicorn.run(app, host="127.0.0.1", port=8000)
+    # ——————————————————————————————————————————————
+import atexit
+
+def cleanup_display():
+    if platform.system() != "Windows" and 'display' in globals() and display is not None:
+        try:
+            display.stop()
+            print("\n[Cleanup] Virtual display stopped cleanly")
+        except Exception as e:
+            print(f"\n[Cleanup] Could not stop display: {e}")
+
+atexit.register(cleanup_display)
+# ——————————————————————————————————————————————
+
 
 
 
